@@ -1,0 +1,271 @@
+body,ul,h1{
+	margin: 0px;
+	padding: 0px;
+}
+body{
+	font: 14px/1.5em 微软雅黑;
+	/* background-color: #83879e; */
+	background: url(../images/bg1.jpg);
+}
+img{
+	border-radius: 50px;
+	vertical-align: top;
+}
+#wolotitle{
+	display: block;
+	color: #ddd;
+	font-size: 35px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	text-align: center;
+}
+#div1{
+	margin: 0 auto;
+	width: 1080px;
+	height: 1600px;
+	background: url(../images/bg2.jpg) no-repeat;
+	padding-top: 20px;
+	position: relative;
+}
+#div1 ul.message{
+	margin: 105px auto;
+	list-style-type: none;
+	width: 850px;
+	height: 200px;
+	border-radius: 15px;
+	background-color: rgba(174, 188, 212, 0.5);
+	padding: 20px 25px;
+	position: relative;
+	display: block;
+}
+#div1 ul .message_author{
+	display:flex;
+}
+#div1 ul .message_author span{
+	color: #000050;
+	margin-top：auto;
+	line-height:32px;
+	font-size: 22px;
+	padding-left: 30px;
+}
+#div1 ul .message_content{
+	font-size: 16px;
+	padding-left: 30px;
+	color: #f0f0f0;
+	line-height: 25px;
+	text-indent: 2em;
+}
+#div1 ul .addTime{
+	position: absolute;
+	right: 10px;
+	bottom: 3px;
+	color: #e3e3e3;
+}
+#div1 ul .reply{
+	background-color: #4a76d4;
+	color: #FFFFFF;
+	border-radius: 13px;
+	position: absolute;
+	left: 25px;
+	bottom: 15px;
+	height: 30px;
+	line-height: 30px;
+	width: auto;
+	display:inline;
+}
+#fbly{
+	margin: auto;
+	width: 830px;
+	height: 470px;
+	color: #000000;
+	background: url(../images/bg3.jpg);
+	background-size: cover;
+	padding: 25px;
+	display: none;
+}
+#fbly #fbly_1{
+	width: 830px;
+	height: 425px;
+	margin: 0 auto;
+	text-align: center;
+	color: #FFFFFF;
+	font-size: 18px;
+}
+#fbly #post_author{
+	border: 0px;
+	background: rgba(0, 0, 0, 0);
+	margin-top: 15px;
+	margin-right: 50px;
+	line-height: 45px;
+	font-size: 20px;
+	color: #fff;
+	width: 70px;
+}
+#fbly #post_content{
+	margin-top: 25px;
+	width: 600px;
+	height: 250px;
+	outline: none;
+	background-color: rgba(255,255,255,0.4);
+	font-size: 18px;
+	letter-spacing: 1px;
+	resize: none;
+	padding: 15px;
+}
+#fbly #post_button{
+	margin-top: 30px;
+	width: 100px;
+	height: 35px;
+	border-radius: 20px;
+	cursor: pointer
+}
+#switch1{
+	width: 40px;
+	height: 120px;
+	border: 0px;
+	writing-mode: vertical-lr;
+	background-color: rgba(255,255,255,0.1);
+	color: #6ace86;
+	position: absolute;
+	top: 15px;
+	left: 3px;
+	border-radius: 12px;
+	font-weight: bold;
+	cursor: pointer;
+}
+#switch1:hover{
+	background-color: rgba(255,255,255,0.4);
+	color: #000000;
+}
+#switch1:active{
+	background-color: rgba(255,255,255,0.7);
+	color: #503527;
+}
+#who{
+	color: #fff;
+	width: 200px;
+	height: 215px;
+	position: fixed;
+	top: 150px;
+	left: 7px;
+	background-color: rgba(174, 188, 212, 0.2);
+	padding-left: 10px;
+}
+#who .textwho{
+	width: 130px;
+	margin-right: 10px;
+	margin-top: 5px;
+	outline: none;
+}
+#who #yzm_text{
+	width: 70px;
+	font-size: 16px;
+	height: 25px;
+	outline: none;
+	margin: 15px 0px 0px 5px;
+	letter-spacing: 3px;
+	text-align: center;
+}
+#who #yzm_img{
+	margin-top: 15px;
+	width: 80px;
+	height: 30px;
+	border-radius: 0px;
+}
+#who #who_button{
+	height: 35px;
+	margin-left: 25px;
+	margin-bottom: 5px;
+}
+#who #who_button input{
+	width: 55px;
+	height: 35px;
+	border-radius: 10px;
+}
+#who #who_button #who_register{
+	margin-left: 25px;
+}
+#who_cancellation{
+	position: absolute;
+	right: 15px;
+	bottom: 15px;
+	width: 60px;
+	height: 35px;
+	border-radius: 5px;
+	display: none;
+}
+#fy {
+	margin: 0 auto;
+	width: 250px;
+	height: 30px;
+	border: 1px solid #fff;
+	color: #DDDDDD;
+	font-size: 19px;
+	margin-top: -30px;
+}
+#fy a{
+	text-decoration: none;
+}
+#fy a:link,#fy a:visited{
+	color: #DDDDDD;
+}
+#fy a:hover{
+	color: #8cddc9;
+}
+#fy div{
+	display: inline-block;
+	line-height: 15px;
+}
+#top{
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+    border-right: 18px solid #8ac3c6;
+	border-bottom: 10px solid transparent;
+}
+#bottom{
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-left: 18px solid #8ac3c6;
+	border-bottom: 10px solid transparent;
+}
+#pop1{
+	width: 100px;
+    height: 90px;
+	background: rgba(225, 225, 225, 0.6);
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 60px;
+	position: relative;
+	top:-515px;
+	left: 715px;
+	display: none;
+}
+#pop2{
+	width: 0;
+	height: 0;
+	right: 100%;
+	top: 40px;
+	position: absolute;
+	border-top: 10px solid transparent;
+	border-right: 21px solid rgba(225, 225, 225, 0.6);
+	border-bottom: 7px solid transparent;
+}
+#pop1 p{
+	display: block;
+	position: absolute;
+	left: 25px;
+}
+#pop1 span{
+	color: rgba(225, 225, 225, 0.9);
+	position: absolute;
+	top: 45px;
+	left: 20px;
+}
+/* 登录之后 */
+.loginname{
+	color: #ffcf0f;
+	font-size: 22px;
+	letter-spacing: 1px;
+}

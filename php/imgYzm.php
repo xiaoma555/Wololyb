@@ -1,0 +1,15 @@
+<?php
+	session_start();
+	header("content-type:image/jpeg");
+	$img=imagecreatefromjpeg("../images/yzm.jpg");
+	$ttf='../ttf/simhei.ttf';
+	$str='qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789';
+	$yzm='';
+	for($i=1;$i<=4;$i++){
+		$yzm.=substr($str,rand(0,61),1);
+	}
+	imagettftext($img,35,0,20,35,660066,$ttf,$yzm);
+	imagejpeg($img);
+	imagedestroy($img);
+	$_SESSION['yzmCode']=strtolower($yzm);
+?>
