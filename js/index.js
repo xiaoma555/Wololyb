@@ -35,6 +35,7 @@
 		var post_content=$.a("post_content");
 		var pop_tips=$.a("pop_tips");
 		var post_button=$.a("post_button");
+		var who_register=$.a("who_register");
 		$.addEvent(face,"change",function(){
 			img1.src="images/"+face.value;
 		})
@@ -73,6 +74,9 @@
 				alert("请输入内容");
 				event.preventDefault();
 			}
+		})
+		$.addEvent(who_register,"click",function(){
+			location.href="admin/zhuce.php";
 		})
 	})
 })();
