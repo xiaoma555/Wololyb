@@ -1,0 +1,78 @@
+<?php session_start();?>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="../css/admin.css">
+		<title>欢迎管理员进入</title>
+	</head>
+
+	<body>
+		<?php if($_SESSION['login']=='success'){?>
+		
+		<div class="container">
+			<div class="topFont">
+				欢迎&lt;<span class="admin"><?php echo $_SESSION['userName'];?></span>&gt;进入管理系统后台
+				<a href="loginout.php">注销</a>
+			</div>
+
+			<?php
+				include("../conn.php");
+				$rs=mysql_query("select * from message order by addTime desc"); 
+				$page=@$_GET['page'];
+				if(empty($page)){
+					  $page=1;  
+				}
+				if($page<1){
+					   $page=1;   
+				}
+				$rscount=mysql_num_rows($rs);
+				$pagecount=ceil($rscount/4);
+				if($page>=$pagecount){
+					  $page=$pagecount;
+				}
+				mysql_data_seek($rs,(($page-1)*4));
+				for($i=1;$i<=4;$i++){
+					  if($info=mysql_fetch_assoc($rs)){
+			?>
+			<ul class="message">
+				<li class="message_author">
+					<img src="../images/<?php echo $info["face"]; ?>"width="50"><span><?php echo $info["author"]; ?></span>
+				</li>
+				<li class="message_content"><?php echo $info["content"]; ?></li>
+				<li class="addTime"><?php echo $info["addTime"]; ?></li>
+				<?php if(!empty($info['reply'])){ ?>
+				<li class="reply">管理员回复：<?php echo $info['reply'];?></li>
+				<?php }else{?>
+				<li class="huifu">
+					<a href="reply.php?messageId=<?php echo $info['messageId'];?>">管理员回复</a>
+				</li>
+				<?php }?>
+				<li class="delete">
+					<a href="delete.php?messageId=<?php echo $info['messageId'];?>">删除</a>
+				</li>
+				<?php if($info['sh']==0){?>
+				<li class="shenhe">
+					<a href="review.php?messageId=<?php echo $info['messageId'];?>">审核</a>
+				</li>
+				<?php }else{
+	 echo '已审核';
+	  }?>
+			</ul>
+			<?php }}
+mysql_free_result($rs);
+mysql_close($conn);
+?>
+			<div id="fy">
+				<a href="manage.php"><div id="top"></div></a>
+				<a href="manage.php?page=<?php echo $page-1; ?>">上一页</a> | 
+				<a href="manage.php?page=<?php echo $page+1; ?>">下一页</a>
+				<a href="manage.php?page=<?php echo $pagecount; ?>"><div id="bottom"></div></a>| 共<span><?php echo $pagecount; ?></span>页
+		</div>
+		</div>
+
+		<?php }else{
+	echo '<script>location.href="error.php";</script>';
+	} ?>
+	</body>
+</html>

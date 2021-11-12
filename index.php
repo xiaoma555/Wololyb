@@ -115,7 +115,6 @@
 				<input type="text" name="yzm_text" id="yzm_text" maxlength="4"><br><br>
 				<div id="who_button">
 					<input type="submit" value="登录" id="who_login">
-					<input type="button" value="注册" id="who_register">
 				</div>
 			</form>
 			<input type="button" value="注销" id="who_cancellation" 

@@ -6,7 +6,7 @@
 			$userName=$_POST['userName'];
 			$password=md5($_POST['password']);
 			include("../conn.php");
-			$rs=mysql_query("select * from users where userName='$userName' and password='$password'");
+			$rs=mysql_query("select * from users where userName='$userName' and Pwd='$password'");
 			$info=mysql_num_rows($rs);
 			if($info>0){
 				$_SESSION['usersName']=$userName;

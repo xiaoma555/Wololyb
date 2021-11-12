@@ -177,13 +177,13 @@ img{
 	margin-left: 25px;
 	margin-bottom: 5px;
 }
+#who #who_button #who_login{
+	margin-left: 85px;
+}
 #who #who_button input{
 	width: 55px;
 	height: 35px;
 	border-radius: 10px;
-}
-#who #who_button #who_register{
-	margin-left: 25px;
 }
 #who_cancellation{
 	position: absolute;
