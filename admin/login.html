@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+	<!-- <script type="text/javascript" src="js/bootstrap.min.js"></script> -->
+    <script src="../js/jquery-1.11.2.js"></script>
+	<style type="text/css">
+		#login{
+			/* margin-left: 600px; */
+			margin: 0 auto;
+			width: 300px;
+			margin-top: 200px;
+		}
+		input{
+			margin-bottom: 15px;
+		}
+
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			$("#bt1").click(function(){
+				$.ajax({
+					url:"check.php?action=login",
+					type:"POST",
+					data:{adminName:$("#adminName").val(),adminPwd:$("#adminPwd").val()},
+					dataType:"json",
+					success:function(data){
+						console.log(123);
+						//验证成功,将jwt-token持久化到localStorage重
+						if(data.result=="success"){
+							
+							localStorage.setItem("jwt",data.jwt);
+							location.href="manage.html";
+						}
+						else{
+							$("#tips").text(data.message);
+						}
+					}
+				})
+			});
+			$("#adminName").focus(function(){
+				$("#tips").text("");
+			});
+			$("#adminPwd").focus(function(){
+				$("#tips").text("");
+			});
+			
+		})
+	</script>
+</head>
+<body>
+	<div id="login" class="">
+		<form class="form-inline" autocomplete="off">
+		  <div class="form-group">
+		    <label class="sr-only" for="exampleInputEmail3">用户名</label>
+		    <input type="text" class="form-control" id="adminName" placeholder="用户名">
+		  </div>
+		  <br>
+		  <div class="form-group">
+		    <label class="sr-only" for="exampleInputPassword3">密码</label>
+		    <input type="password" class="form-control" id="adminPwd" placeholder="密码">
+		  </div>
+		  <br>
+		  <div id="tips"></div>
+		  		  <button type="button" class="btn btn-success" id="bt1">Sign in</button>
+		</form>
+	</div>	
+</body>
+</html>

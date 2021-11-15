@@ -1,78 +1,434 @@
-<?php session_start();?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 	<head>
-		<meta charset="utf-8">
-		<link rel="stylesheet" href="../css/admin.css">
-		<title>欢迎管理员进入</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/index.css">
+		<script src="../js/jquery-1.11.2.js"></script>
+		<script src="../js/fabuliuyan.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var page = 1;
+				var pagecount = 1;
+				var rescount = 0;
+				//切换图片
+				let facestr = "";
+				for (let i = 0; i <= 17; i++) {
+					facestr += '<option value="' + i + '.jpg">' + i + ".jpg" + '</option>';
+				}
+				$("#face").html(facestr).change(function() {
+					let _this = $(this);
+					$("#img1").attr("src", "../img/" + _this.val());
+				})
+				$.ajaxSetup({
+					type: "post",
+					dataType: "json"
+				})
+				//翻页
+				$.ajax({
+					url: "rescount.php",
+					type: "post",
+					dataType: "json",
+					success: function(data) {
+						rescount = data;
+						pagecount = Math.ceil(rescount / 5);
+					}
+				});
+				//下一页:
+				// var flag=true;//当页数page等于最大页数pagecount后，不允许发送ajax请求标识
+				$("#mwh_a2").click(function() {
+
+					var str = "";
+					//console.log("page=",page);//1
+					//console.log("pagecount=",pagecount);//3
+					if (page > pagecount) { //如果页数page大于总页数pagecount
+						page = pagecount; //将页数page值置为总页数pagecount，不让page页数超过总页数
+					} else {
+
+						// if(page<pagecount){//如果页数page小于pagecount总页数，每次点击加1
+						page = page + 1;
+						if (page >= pagecount) {
+							page = pagecount;
+						}
+						//  }else{//如果page==pagecount总页数，是否发送ajax标识，为false
+						//   flag=false;
+						//   }
+						if (page <= pagecount) {
+							$.ajax({
+								url: "message2.php?page=" + page,
+								// data:{page:page,pagecount:pagecount},
+								success: function(data) {
+									// console.log(data);
+									data = data.data;
+									// console.log(data);
+									var str = "<ul class='mwh_ul'>";
+									// 对数据进行遍历
+									for (var i = 0 in data) {
+										str +=
+											"<div class='mwh_div'><a href='javascript:;' id='mwh_huifu' data_id="+data[i].messageId+">回复</a><a href='javascript:;'id='mwh_delete' data_id="+data[i].messageId+" class='mwh_delete'>删除</a><a href='javascript:;' id='mwh_sh' data_id="+data[i].messageId+">审核</a><li><p class='mwh_title'>" +
+											data[i].title + "</p>" +
+											" <span class='mwh_time'>" + data[i]
+											.addTime + "</span></p>" +
+											"<p class='mwh_p'>[<span class='mwh_author'>" +
+											data[i].author + "</span>]" +
+										"<img src='../img/" + data[i].face +
+											"'class='mwh_img'>" + "<br>" +
+											"留言：<div class='mwh_div2'>" + data[i]
+											.content + "</li></div>";
+										if (data[i].reply) {
+											str += "<p class='mwh_p2'>" + "管理员回复：" +
+												data[i].reply + "</p>";
+										}
+									}
+									// 输出信息
+									$(".box .content .ly").html(str + "</ul>");
+								
+								}
+							});
+
+						}
+					}
+
+				});
+
+
+				//上一页:
+
+				// var flag1 = true; //当页数page等于最小页数1后，不允许发送ajax请求标识
+				$("#mwh_a1").click(function() {
+
+					var str = "";
+					// console.log("page=", page);
+					// console.log("pagecount=", pagecount);
+					if (page < 1) { //如果页数page小于1
+						page = 1; //将页数page值置为1，不让page页数小于1
+					} else {
+						// if (page > 1) { //如果页数page小于1，每次点击减1
+						page = page - 1;
+						if (page <= 1) {
+							page = 1;
+						}
+						// } else { //如果page==1，是否发送ajax标识，为false
+						// 	flag1 = false;
+						// }
+
+						if (page >= 1) {
+							$.ajax({
+								url: "message2.php?page=" + page,
+								success: function(data) {
+									// console.log(data);
+									data = data.data;
+									// console.log(data);
+									var str = "<ul class='mwh_ul'>";
+									// 对数据进行遍历
+									for (var i = 0 in data) {
+										str +=
+											"<div class='mwh_div'><a href='javascript:;' id='mwh_huifu' data_id="+data[i].messageId+">回复</a><a href='javascript:;'id='mwh_delete' data_id="+data[i].messageId+" class='mwh_delete'>删除</a><a href='javascript:;' id='mwh_sh' data_id="+data[i].messageId+">审核</a><li><p class='mwh_title'>" +
+											data[i].title + "</p>" +
+											" <span class='mwh_time'>" + data[i]
+											.addTime + "</span></p>" +
+											"<p class='mwh_p'>[<span class='mwh_author'>" +
+											data[i].author + "</span>]" +
+										"<img src='../img/" + data[i].face +
+											"'class='mwh_img'>" + "<br>" +
+											"留言：<div class='mwh_div2'>" + data[i]
+											.content + "</li></div>";
+										if (data[i].reply) {
+											str += "<p class='mwh_p2'>" + "管理员回复：" +
+												data[i].reply + "</p>";
+										}
+									}
+									// 输出信息
+									$(".box .content .ly").html(str + "</ul>");
+								
+								}
+							});
+
+						}
+					}
+
+				});
+
+				//切换图片结束
+				$.ajaxSetup({
+					type: "post",
+					dataType: "json"
+				})
+				$.ajax({
+					url: "message2.php",
+					success: function(data) {
+						// console.log(data);
+						data = data.data;
+						// console.log(data);
+						var str = "<ul class='mwh_ul'>";
+						// 对数据进行遍历
+						for (var i = 0 in data) {
+							str +=
+								"<div class='mwh_div'><a href='javascript:;' id='mwh_huifu' data_id="+data[i].messageId+">回复</a><a href='javascript:;'id='mwh_delete' data_id="+data[i].messageId+" class='mwh_delete'>删除</a><a href='javascript:;' id='mwh_sh' data_id="+data[i].messageId+">审核</a><li><p class='mwh_title'>" +
+								data[i].title + "</p>" +
+								" <span class='mwh_time'>" + data[i]
+								.addTime + "</span></p>" +
+								"<p class='mwh_p'>[<span class='mwh_author'>" +
+								data[i].author + "</span>]" +
+							"<img src='../img/" + data[i].face +
+								"'class='mwh_img'>" + "<br>" +
+								"留言：<div class='mwh_div2'>" + data[i]
+								.content + "</li></div>";
+							if (data[i].reply) {
+								str += "<p class='mwh_p2'>" + "管理员回复：" +
+									data[i].reply + "</p>";
+							}
+						}
+						// 输出信息
+						$(".box .content .ly").html(str + "</ul>");
+					
+					}
+				});
+				$("#sub").click(function() {
+					$.ajax({
+						url: "../leavesmessage.php",
+						data: {
+							author: $("#author").val(),
+							title: $("#title").val(),
+							content: $("#content").val(),
+							face: $("#face").val()
+						},
+						success: function(data) {
+							// var data=JSON.parse(data);
+							// console.log(data.message);
+							if (data.status == "10001") {
+								alert(data.message);
+								$("#author").val("");
+								$("#title").val("");
+								$("#content").val('');
+								// alert(res.msg);
+							} else {
+								alert(data.message);
+							}
+							$.ajax({
+								url: "message2.php",
+								success: function(data) {
+									console.log(data);
+									data = data.data;
+									// console.log(data);
+									var str = "<ul class='mwh_ul'>";
+									// 对数据进行遍历
+									for (var i = 0 in data) {
+										str +=
+											"<div class='mwh_div'><a href='javascript:;' id='mwh_huifu' data_id="+data[i].messageId+">回复</a><a href='javascript:;'id='mwh_delete' data_id="+data[i].messageId+" class='mwh_delete'>删除</a><a href='javascript:;' id='mwh_sh' data_id="+data[i].messageId+">审核</a><li><p class='mwh_title'>" +
+											data[i].title + "</p>" +
+											" <span class='mwh_time'>" + data[i]
+											.addTime + "</span></p>" +
+											"<p class='mwh_p'>[<span class='mwh_author'>" +
+											data[i].author + "</span>]" +
+		 								"<img src='../img/" + data[i].face +
+											"'class='mwh_img'>" + "<br>" +
+											"留言：<div class='mwh_div2'>" + data[i]
+											.content + "</li></div>";
+										if (data[i].reply) {
+											str += "<p class='mwh_p2'>" + "管理员回复：" +
+												data[i].reply + "</p>";
+										}
+									}
+									// 输出信息
+									$(".box .content .ly").html(str + "</ul>");
+
+								}
+							});
+						}
+					})
+				})
+				$.ajax({
+					url: "manage.php",
+					type: "GET",
+					cache: false,
+					headers: {
+						"token": localStorage.getItem("jwt")
+					},
+					dataType: "json",
+					success: function(data) { //鉴权成功的回调函数
+						if (data.result == "success") { //权限标记
+							$("#tips").html(data.info.data.adminName);
+
+						} else { // 有权限的标记
+							location.href = "login.html";
+						}
+
+
+					} // 前面是鉴权成功的回调函数
+
+				}) // 前面是鉴权的括号
+
+
+
+				//注销
+				$("#out").click(function() {
+					localStorage.removeItem("jwt");
+					location.href = "login.html";
+				})
+				//删除留言功能
+
+				$(document).on("click","#mwh_delete",function() {
+					var _this = $(this);
+					$.ajax({
+						url: "delete.php",
+						type: "POST",
+						data: {
+							messageId: _this.attr("data_id")
+						},
+						dataType: "json",
+						success: function(data) {
+							if (data.status == '10001') {
+								// _this.parent(".mwh_div").remove();
+								location.href="manage.html";
+							} else {
+								alert(data.message);
+							}
+						}
+					})
+				})
+				//审核
+				$(document).on("click","#mwh_sh",function() {
+						let _this = $(this); //存储一下这个触发对象
+						$.ajax({
+							url: "sh.php",
+							type: "POST",
+							data: {
+								messageId: _this.attr("data_id")
+							},
+							dataType: 'json',
+							success: function(data) {
+								if (data.status == "10001") {
+									_this.html("已审核");
+								}
+								else{
+									alert(data.message);
+								}
+							}
+						}); //审核的ajx
+					}
+				)
+				//回复.
+				$(document).on("click","#mwh_huifu",function(){
+					var _this=$(this);
+					$(".div3").show();
+					$(".div2").show();
+					$("#bt1").click(function(){
+						$.ajax({
+							url:"reply_check.php",
+							type:"POST",
+							data:{messageId:_this.attr("data_id"),reply:$("#reply").val()},
+							dataType:"json",
+							success:function(data){
+								console.log(data);
+								if(data.status=="10001"){
+									$(".div3").hide();
+									$(".div2").hide();
+								  alert(data.message);
+								location.href="manage.html";
+								}else{
+									alert(data.message);
+								}
+							}
+						});//回复的页面
+					})
+				})
+				$("#bt2").click(function(){
+					$(".div2").hide();
+				})
+		})
+		</script>
 	</head>
 
 	<body>
-		<?php if($_SESSION['login']=='success'){?>
-		
-		<div class="container">
-			<div class="topFont">
-				欢迎&lt;<span class="admin"><?php echo $_SESSION['userName'];?></span>&gt;进入管理系统后台
-				<a href="loginout.php">注销</a>
+		<div class="bbooxx">
+			<!-- 导航条 -->
+			<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">绽放色彩</a>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navba
+            r-collapse-1">
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+								<p class="p1">欢迎<span class="tips" id="tips"> </span>登录</p>
+							</li>
+							<li class="dropdown">
+								<a href="javascript:;" class="out" id="out">注销</a>
+							</li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+			<!-- 导航条结束 -->
+			<div class="box">
+
+				<!-- 显示留言 -->
+				<div id="contents" class="content">
+					<div class="ly">
+
+					</div>
+				</div>
+				<!-- 显示留言结束 -->
+				<!-- 查看留言按钮-->
+				<div id="page">
+					<a href="javascript:;" class="btn btn-info" id="mwh_a1">上一页</a>
+					<a href="javascript:;" class="btn btn-info" id="mwh_a2">下一页</a>
+				</div>
 			</div>
+			<!-- 翻页-->
 
-			<?php
-				include("../conn.php");
-				$rs=mysql_query("select * from message order by addTime desc"); 
-				$page=@$_GET['page'];
-				if(empty($page)){
-					  $page=1;  
-				}
-				if($page<1){
-					   $page=1;   
-				}
-				$rscount=mysql_num_rows($rs);
-				$pagecount=ceil($rscount/4);
-				if($page>=$pagecount){
-					  $page=$pagecount;
-				}
-				mysql_data_seek($rs,(($page-1)*4));
-				for($i=1;$i<=4;$i++){
-					  if($info=mysql_fetch_assoc($rs)){
-			?>
-			<ul class="message">
-				<li class="message_author">
-					<img src="../images/<?php echo $info["face"]; ?>"width="50"><span><?php echo $info["author"]; ?></span>
-				</li>
-				<li class="message_content"><?php echo $info["content"]; ?></li>
-				<li class="addTime"><?php echo $info["addTime"]; ?></li>
-				<?php if(!empty($info['reply'])){ ?>
-				<li class="reply">管理员回复：<?php echo $info['reply'];?></li>
-				<?php }else{?>
-				<li class="huifu">
-					<a href="reply.php?messageId=<?php echo $info['messageId'];?>">管理员回复</a>
-				</li>
-				<?php }?>
-				<li class="delete">
-					<a href="delete.php?messageId=<?php echo $info['messageId'];?>">删除</a>
-				</li>
-				<?php if($info['sh']==0){?>
-				<li class="shenhe">
-					<a href="review.php?messageId=<?php echo $info['messageId'];?>">审核</a>
-				</li>
-				<?php }else{
-	 echo '已审核';
-	  }?>
-			</ul>
-			<?php }}
-mysql_free_result($rs);
-mysql_close($conn);
-?>
-			<div id="fy">
-				<a href="manage.php"><div id="top"></div></a>
-				<a href="manage.php?page=<?php echo $page-1; ?>">上一页</a> | 
-				<a href="manage.php?page=<?php echo $page+1; ?>">下一页</a>
-				<a href="manage.php?page=<?php echo $pagecount; ?>"><div id="bottom"></div></a>| 共<span><?php echo $pagecount; ?></span>页
-		</div>
+			<!-- 发布留言板块 -->
+			<div id="fb">
+				<div class="fabu">
+
+					昵称：
+					<input type="text" name="author" class="author" id="author">
+					头像：
+					<select name="face" id="face">
+						<option value="">
+
+						</option>
+					</select>
+					<img width="50" src="../img/0.jpg" alt="" id="img1">
+					<br>
+					标题：
+					<input type="text" name="title" class="title" id="title">
+					<br>
+					<textarea cols="40" rows="10" id="content"></textarea>
+					<br>
+					<input type="button" name="submit" value="发布留言" class="sub" id="sub">
+
+				</div>
+				<div class="teb" id="teb">
+					<div class="teb-1">
+						<h3>发</h3>
+						<h3>布</h3>
+						<h3>留</h3>
+						<h3>言</h3>
+					</div>
+				</div>
+			</div>
+			<!-- 发布留言板块结束 -->
+             
+			 <div class="div3">
+			 	
+			 </div>
+			 <div class="div2">
+			      <textarea rows="10" cols="60" id="reply"></textarea>
+			 	 <input type="button" value="回复" id="bt1" data_id="messageId">
+				 <input type="button" name="" id="bt2" value="取消" />
+			 </div>
+			 	
 		</div>
 
-		<?php }else{
-	echo '<script>location.href="error.php";</script>';
-	} ?>
 	</body>
+
 </html>

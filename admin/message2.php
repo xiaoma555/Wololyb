@@ -1,8 +1,8 @@
 <?php
 if($_SERVER['REQUEST_METHOD']=='POST'){
 	$page=@$_GET['page'];
-		include("conn.php");
-		$result = mysql_query("select * from message where sh=1 order by addTime desc");// 获取数据
+		include("../conn.php");
+		$result = mysql_query("select * from message  order by addTime desc");// 获取数据
 		
 		
 		if(empty($page)){
@@ -27,6 +27,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 			
 		}
 		echo substr($json,0,strlen($json)-1).']}';
+		// if($num){
+		// 	while($arr = mysql_fetch_assoc($result)){
+		// 		$json.=json_encode($arr).',';
+		// 	}
 		// 	echo substr($json,0,strlen($json)-1).']}';
 		// }
 		// else{

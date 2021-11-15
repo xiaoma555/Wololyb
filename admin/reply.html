@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<script src="../js/jquery-1.11.2.js"></script>
+	<style type="text/css">
+		
+		.div1{
+			position: relative;
+			-webkit-box-sizing: content-box;
+			-moz-box-sizing: content-box;
+			box-sizing: content-box;
+			width: 100%;
+			height: 705px;
+			border: none;
+			font: normal 16px/1 "Times New Roman", Times, serif;
+			color: rgba(255,255,255,1);
+			text-align: center;
+			-o-text-overflow: ellipsis;
+			text-overflow: ellipsis;
+			background: -webkit-linear-gradient(-90deg, rgba(210,103,239,1) 0, rgba(103,212,239,1) 24%, rgba(103,239,214,1) 49%, rgba(103,239,116,1) 83%, rgba(174,255,0,1) 100%) no-repeat;
+			background: -moz-linear-gradient(180deg, rgba(210,103,239,1) 0, rgba(103,212,239,1) 24%, rgba(103,239,214,1) 49%, rgba(103,239,116,1) 83%, rgba(174,255,0,1) 100%) no-repeat;
+			background: linear-gradient(180deg, rgba(210,103,239,1) 0, rgba(103,212,239,1) 24%, rgba(103,239,214,1) 49%, rgba(103,239,116,1) 83%, rgba(174,255,0,1) 100%) no-repeat;
+			background-position: 50% 50%;
+			-webkit-background-origin: padding-box;
+			background-origin: padding-box;
+			-webkit-background-clip: border-box;
+			background-clip: border-box;
+			-webkit-background-size: auto auto;
+			background-size: auto auto;
+		}
+		.div2{
+			position: absolute;
+			top: 200px;
+			left: 460px;
+		}
+		#reply{
+			border-radius: 20px;
+			padding: 10px;
+		}
+		#bt1{
+			width: 100px;
+			height: 40px;
+		background: #acacac;
+		border-radius: 10px;
+		margin-top: 100px;	
+		position: absolute;
+		top: 180px;
+		cursor: pointer;
+		}
+		#bt1:hover{
+			background: #C0A16B;
+		}
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			$("#bt1").click(function(){
+				var _this=$(this);
+				$.ajax({
+					url:"reply_check.php",
+					type:"POST",
+					data:{messageId:_this.attr("data_id"),reply:$("#reply").val()},
+					dataType:"json",
+					success:function(data){
+						console.log(data);
+						if(data.status=="10001"){
+						  alert(data.message);
+						location.href="manage.html";
+						}else{
+							alert(data.message);
+						}
+					}
+				});//回复的页面
+			})
+		})
+	</script>
+</head>
+<body>
+	<div class="div1">
+		<div class="div2">
+		     <textarea rows="10" cols="60" id="reply"></textarea>
+			 <input type="button" value="回复" id="bt1" data_id="messageId">
+		</div>
+	</div>
+</body>
+</html>
