@@ -7,6 +7,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
    // echo '{"status":"10001","rescount":'.$rescount.'}';
    echo $rescount;
 }else{
-	header("location:error.php");
+	header("location:../error.php");
 }
 ?>

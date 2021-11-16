@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<style type="text/css">
+		body{
+			background: url(../img/bg4.jpg) no-repeat;
+			background-size: 100%;
+		}
+		.div1{
+			width: 900px;
+			margin: 0 auto;
+			position: relative;
+		}
+		#p1{
+			position: absolute;
+			top: 100px;
+			left: 400px;
+			/* margin-left: 300px; */
+		}
+		#nums{
+		margin-left: 190px;
+		color: #FF0000;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var nums=document.getElementById("nums");
+			setInterval(function(){
+				nums.innerText=nums.innerText-1;
+				if(nums.innerText=="0"){
+				location.href="../index.html";
+			}
+			},1000);
+			
+		}
+	</script>
+</head>
+<body>
+	<div class="div1">
+		<p id="p1">错误页面 咱也不知道你是怎么点进来的，<br> <span id="nums">3</span>秒后返回首页</p>
+	</div>
+</body>
+</html>
